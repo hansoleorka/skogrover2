@@ -19,15 +19,13 @@ clipPointSourceID <- function(cluster,flighlines){
   require(dplyr)
   fsin <- unique(flightlines$PointSourceID)
   las <- readLAS(cluster)
-  print(dim(las))
-  #if (is.empty(las)) return(NULL)
   if(nrow(las)>0){
     ps <- unique(las$PointSourceID)
     print(ps)
     ps <- ps[ps %in% fsin]
-    
+    message(ps)
     output <- c()
-    if(is.null(length(ps)) ==FALSE){
+    if(length(ps) > 0){
       k <- 0
       for(i in c(1:length(ps))){
         fl <- flightlines %>% filter(PointSourceID == ps[i]) 
@@ -41,7 +39,7 @@ clipPointSourceID <- function(cluster,flighlines){
           }
         }
       }
-      return(output)
-    }
+    }  
   }
+  return(output)
 }
